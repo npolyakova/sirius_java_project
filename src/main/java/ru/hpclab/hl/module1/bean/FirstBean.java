@@ -1,4 +1,4 @@
-package ru.hpclab.bd.module1.bean;
+package ru.hpclab.hl.module1.bean;
 
 public class FirstBean {
     private final String greeting = "Hello world!";

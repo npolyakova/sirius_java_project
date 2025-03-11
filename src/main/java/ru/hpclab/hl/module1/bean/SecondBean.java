@@ -1,4 +1,4 @@
-package ru.hpclab.bd.module1.bean;
+package ru.hpclab.hl.module1.bean;
 
 public class SecondBean extends FirstBean {
     private final String greeting = "World was investigated";

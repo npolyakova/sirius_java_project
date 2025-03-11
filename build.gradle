@@ -3,7 +3,7 @@ plugins {
 	id 'java'
 }
 
-group = 'ru.hpclab.bd'
+group = 'ru.hpclab.hl'
 version = '0.0.1-SNAPSHOT'
 java {
 	sourceCompatibility = JavaVersion.VERSION_21

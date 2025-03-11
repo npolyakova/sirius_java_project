@@ -1,8 +1,8 @@
-package ru.hpclab.bd.module1.context.find;
+package ru.hpclab.hl.module1.context.find;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.hpclab.bd.module1.bean.FirstBean;
+import ru.hpclab.hl.module1.bean.FirstBean;
 
 public class FindBeanInOurFirstContext {
     public static void main(String[] args) {
