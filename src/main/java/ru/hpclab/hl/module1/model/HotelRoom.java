@@ -8,10 +8,22 @@ import org.springframework.lang.NonNull;
 @Setter
 public class HotelRoom {
 
+    public enum RoomType {
+        LUX,
+        ECONOM,
+        STANDART
+    }
+
     @NonNull
     private long id;
     @NonNull
-    private boolean type;
+    private RoomType type;
     @NonNull
     private long costPerNight;
+
+    public HotelRoom(long id, RoomType type, long costPerNight) {
+        this.id = id;
+        this.type = type;
+        this.costPerNight = costPerNight;
+    }
 }

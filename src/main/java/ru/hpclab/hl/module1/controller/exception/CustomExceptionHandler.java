@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class GuestExceptionHandler {
+public class CustomExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<String> onGuestException(GuestException e) {
+    public ResponseEntity<String> onGuestException(CustomException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 

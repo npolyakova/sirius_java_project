@@ -2,7 +2,7 @@ package ru.hpclab.hl.module1.repository;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ObjectUtils;
-import ru.hpclab.hl.module1.controller.exception.GuestException;
+import ru.hpclab.hl.module1.controller.exception.CustomException;
 import ru.hpclab.hl.module1.model.Guest;
 
 //TODO
@@ -24,7 +24,7 @@ public class GuestRepository {
     public Guest findById(long id) {
         final var guest = guests.get(id);
         if (guest == null) {
-            throw new GuestException(format(GUEST_NOT_FOUND_MSG, id));
+            throw new CustomException(format(GUEST_NOT_FOUND_MSG, id));
         }
         return guest;
     }
@@ -32,7 +32,7 @@ public class GuestRepository {
     public void delete(long id) {
         final var removed = guests.remove(id);
         if (removed == null) {
-            throw new GuestException(format(GUEST_NOT_FOUND_MSG, id));
+            throw new CustomException(format(GUEST_NOT_FOUND_MSG, id));
         }
     }
 
@@ -43,7 +43,7 @@ public class GuestRepository {
 
         final var userData = guests.get(guest.getId());
         if (userData != null) {
-            throw new GuestException(format(GUEST_EXISTS_MSG, guest.getId()));
+            throw new CustomException(format(GUEST_EXISTS_MSG, guest.getId()));
         }
 
         guests.put(guest.getId(), guest);
@@ -54,14 +54,14 @@ public class GuestRepository {
     public Guest put(Guest guest) {
         final var userData = guests.get(guest.getId());
         if (userData == null) {
-            throw new GuestException(format(GUEST_NOT_FOUND_MSG, guest.getId()));
+            throw new CustomException(format(GUEST_NOT_FOUND_MSG, guest.getId()));
         }
 
         final var removed = guests.remove(guest.getId());
         if (removed != null) {
             guests.put(guest.getId(), guest);
         } else {
-            throw new GuestException(format(GUEST_NOT_FOUND_MSG, guest.getId()));
+            throw new CustomException(format(GUEST_NOT_FOUND_MSG, guest.getId()));
         }
 
         return guest;
