@@ -20,12 +20,8 @@ public class GuestService {
         return guestRepository.findById(Long.getLong(id));
     }
 
-    public Guest saveGuest(Guest user) {
-        return guestRepository.save(user);
-    }
-
-    public void deleteGuest(String id) {
-        guestRepository.delete(Long.getLong(id));
+    public Guest saveGuest(Guest guest) {
+        return guestRepository.save(guest);
     }
 
     public Guest updateGuest(String id, Guest guest) {
