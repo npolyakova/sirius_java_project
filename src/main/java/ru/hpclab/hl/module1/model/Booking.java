@@ -13,7 +13,14 @@ public class Booking {
     @NonNull
     private long guest;
     private long room;
+    @NonNull
     private String dates;
     private double cost;
+
+    public Booking(long id, long guest, String dates) {
+        this.id = id;
+        this.guest = guest;
+        this.dates = dates;
+    }
 
 }

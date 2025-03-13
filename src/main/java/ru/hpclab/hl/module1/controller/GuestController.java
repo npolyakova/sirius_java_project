@@ -27,11 +27,6 @@ public class GuestController {
         return guestService.getGuestById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteGuest(@PathVariable String id) {
-        guestService.deleteGuest(id);
-    }
-
     @PostMapping("")
     public Guest saveGuest(@RequestBody Guest client) {
         return guestService.saveGuest(client);
