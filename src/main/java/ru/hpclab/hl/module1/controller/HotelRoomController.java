@@ -2,10 +2,11 @@ package ru.hpclab.hl.module1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.hpclab.hl.module1.model.HotelRoom;
+import ru.hpclab.hl.module1.entities.HotelRoom;
 import ru.hpclab.hl.module1.service.HotelRoomService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/rooms")
@@ -23,7 +24,7 @@ public class HotelRoomController {
     }
 
     @GetMapping("/{id}")
-    public HotelRoom getHotelRoomById(@PathVariable String id) {
+    public Optional<HotelRoom> getHotelRoomById(@PathVariable String id) {
         return roomService.getHotelRoomById(id);
     }
 
@@ -37,8 +38,8 @@ public class HotelRoomController {
         return roomService.saveHotelRoom(client);
     }
 
-    @PutMapping(value = "/{id}")
-    public HotelRoom updateHotelRoom(@PathVariable(required = false) String id, @RequestBody HotelRoom room) {
-        return roomService.updateHotelRoom(id, room);
-    }
+//    @PutMapping(value = "/{id}")
+//    public HotelRoom updateHotelRoom(@PathVariable(required = false) String id, @RequestBody HotelRoom room) {
+//        return roomService.updateHotelRoom(id, room);
+//    }
 }

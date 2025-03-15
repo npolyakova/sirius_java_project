@@ -1,23 +1,28 @@
 package ru.hpclab.hl.module1.service;
 
-import ru.hpclab.hl.module1.model.HotelRoom;
+import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ru.hpclab.hl.module1.entities.HotelRoom;
 import ru.hpclab.hl.module1.repository.HotelRoomRepository;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
+@Table(name = "hotel_room")
 public class HotelRoomService {
 
-    private final HotelRoomRepository roomRepository;
+    @Autowired
+    private HotelRoomRepository roomRepository;
 
-    public HotelRoomService(HotelRoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
-
+    @Transactional
     public List<HotelRoom> getAllHotelRooms() {
         return roomRepository.findAll();
     }
 
-    public HotelRoom getHotelRoomById(String id) {
+    public Optional<HotelRoom> getHotelRoomById(String id) {
         return roomRepository.findById(Long.getLong(id));
     }
 
@@ -26,11 +31,12 @@ public class HotelRoomService {
     }
 
     public void deleteHotelRoom(String id) {
-        roomRepository.delete(Long.getLong(id));
+        var room = getHotelRoomById(id);
+        room.ifPresent(hotelRoom -> roomRepository.delete(hotelRoom));
     }
 
-    public HotelRoom updateHotelRoom(String id, HotelRoom room) {
-        room.setId(Long.getLong(id));
-        return roomRepository.put(room);
-    }
+//    public HotelRoom updateHotelRoom(String id, HotelRoom room) {
+//        room.setId(Long.getLong(id));
+//        return roomRepository.put(room);
+//    }
 }
