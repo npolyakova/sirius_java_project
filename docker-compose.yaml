@@ -1,8 +1,10 @@
 services:
-#  app:
-#    build: ./
-#    ports:
-#      - "8080:8080"
+  app:
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
 
   postgres:
     image:
