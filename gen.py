@@ -31,8 +31,8 @@ def add_booking_to_database():
 
         hotel_room_data = [
             (1200, 'LUX'),
-            (800, 'ORD'),
-            (700, 'ORD-')
+            (800, 'STANDART'),
+            (700, 'ECONOM')
         ]
 
         hotel_room_insert_query = """
