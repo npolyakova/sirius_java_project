@@ -4,9 +4,9 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      - postgres_db
 
-  postgres:
+  postgres_db:
     image:
       postgres:16
     environment:
