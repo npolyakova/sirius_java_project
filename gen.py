@@ -6,7 +6,7 @@ def add_booking_to_database():
             dbname="java_app_db",
             user="app_user",
             password="23bjf8Gewb3",
-            host="postgres_db",
+            host="localhost",
             port="5432"
         )
 
