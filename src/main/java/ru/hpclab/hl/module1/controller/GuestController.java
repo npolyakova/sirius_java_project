@@ -33,8 +33,9 @@ public class GuestController {
         return guestService.saveGuest(client);
     }
 
-//    @PutMapping(value = "/{id}")
-//    public Guest updateGuest(@PathVariable(required = false) String id, @RequestBody Guest guest) {
-//        return guestService.updateGuest(id, guest);
-//    }
+    @DeleteMapping("")
+    public void deleteAllGuest() {
+        guestService.deleteAll();
+    }
+
 }

@@ -16,6 +16,8 @@ public interface HotelRoomRepository extends CrudRepository<HotelRoom, Long> {
 
     void delete(HotelRoom room);
 
+    void deleteAll();
+
 //    public static final String ROOM_NOT_FOUND_MSG = "HotelRoom with ID %s not found";
 //    public static final String ROOM_EXISTS_MSG = "HotelRoom with ID %s is already exists";
 //

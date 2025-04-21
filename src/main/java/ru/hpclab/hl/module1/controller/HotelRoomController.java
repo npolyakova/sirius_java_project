@@ -38,8 +38,8 @@ public class HotelRoomController {
         return roomService.saveHotelRoom(client);
     }
 
-//    @PutMapping(value = "/{id}")
-//    public HotelRoom updateHotelRoom(@PathVariable(required = false) String id, @RequestBody HotelRoom room) {
-//        return roomService.updateHotelRoom(id, room);
-//    }
+    @DeleteMapping("")
+    public void deleteAllGuest() {
+        roomService.deleteAll();
+    }
 }

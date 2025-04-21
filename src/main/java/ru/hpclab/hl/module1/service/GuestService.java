@@ -34,6 +34,10 @@ public class GuestService {
         return mapToGuestDto(guestRepository.save(guest));
     }
 
+    public void deleteAll() {
+        guestRepository.deleteAll();
+    }
+
 //    public Guest updateGuest(String id, Guest guest) {
 //        guest.setId(Long.getLong(id));
 //        return guestRepository.put(guest);

@@ -32,9 +32,8 @@ public class BookingService {
         return mapToDto(bookingRepository.save(booking));
     }
 
-//    @Transactional
-//    public void deleteBooking(String id) {
-//        var book = getBookingById(id);
-//        book.ifPresent(booking -> bookingRepository.delete(booking));
-//    }
+    @Transactional
+    public void deleteAll() {
+        bookingRepository.deleteAll();
+    }
 }

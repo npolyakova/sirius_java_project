@@ -15,5 +15,7 @@ public interface GuestRepository extends CrudRepository<Guest, Long> {
 
     Guest save(GuestDto guest);
 
+    void deleteAll();
+
 //    void delete(GuestDto guest);
 }
