@@ -17,7 +17,7 @@ import org.springframework.lang.NonNull;
 public class Guest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column
@@ -27,6 +27,13 @@ public class Guest {
     @Column
     @NonNull
     private String passport;
+
+    @Column
+    @NonNull
+    private String checkIn;
+
+    @Column
+    private String checkOut;
 
     @Column
     private boolean deleted;

@@ -1,7 +1,9 @@
 package ru.hpclab.hl.module1.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,6 +12,8 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
 
 import java.util.Date;
@@ -21,16 +25,18 @@ import java.util.Date;
 public class Booking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NonNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "guestId")
     private Guest guest;
 
     @NonNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "roomId")
     private HotelRoom room;
 
