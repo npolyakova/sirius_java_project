@@ -38,9 +38,4 @@ public class HotelRoomService {
     public void deleteAll() {
         roomRepository.deleteAll();
     }
-
-//    public HotelRoom updateHotelRoom(String id, HotelRoom room) {
-//        room.setId(Long.getLong(id));
-//        return roomRepository.put(room);
-//    }
 }

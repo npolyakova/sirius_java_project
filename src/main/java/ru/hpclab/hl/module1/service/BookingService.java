@@ -4,13 +4,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hpclab.hl.module1.dto.BookingDto;
-import ru.hpclab.hl.module1.entities.Booking;
 import ru.hpclab.hl.module1.repository.BookingRepository;
 import ru.hpclab.hl.module1.utils.BookingMapper;
 
 import java.util.List;
 import java.util.Optional;
 
+import static ru.hpclab.hl.module1.utils.BookingMapper.mapToBookingEntity;
 import static ru.hpclab.hl.module1.utils.BookingMapper.mapToDto;
 
 @Service
@@ -28,12 +28,20 @@ public class BookingService {
     }
 
     @Transactional
-    public BookingDto saveBooking(Booking booking) {
-        return mapToDto(bookingRepository.save(booking));
+    public BookingDto saveBooking(BookingDto booking) {
+        return mapToDto(bookingRepository.save(mapToBookingEntity(booking)));
     }
 
     @Transactional
     public void deleteAll() {
         bookingRepository.deleteAll();
+    }
+
+    @Transactional
+    public void getAverageOccupancyByRoomCategory() {
+//        this.getAllBookings().stream().filter(bookingDto -> {
+//            String dates = bookingDto.getDates();
+//            if (dates)
+//        })
     }
 }

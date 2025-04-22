@@ -1,5 +1,6 @@
 package ru.hpclab.hl.module1.controller;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.hpclab.hl.module1.entities.HotelRoom;
@@ -38,8 +39,14 @@ public class HotelRoomController {
         return roomService.saveHotelRoom(client);
     }
 
+    @PutMapping("")
+    public HotelRoom updateHotelRoom(@RequestBody HotelRoom client) {
+        return roomService.saveHotelRoom(client);
+    }
+
+    @ApiIgnore
     @DeleteMapping("")
-    public void deleteAllGuest() {
+    public void deleteAllRooms() {
         roomService.deleteAll();
     }
 }

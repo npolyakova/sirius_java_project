@@ -1,8 +1,9 @@
 package ru.hpclab.hl.module1.controller;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.hpclab.hl.module1.dto.GuestDto;
+import ru.hpclab.hl.module1.entities.Guest;
 import ru.hpclab.hl.module1.service.GuestService;
 
 import java.util.List;
@@ -19,20 +20,26 @@ public class GuestController {
     }
 
     @GetMapping("")
-    public List<GuestDto> getGuests() {
+    public List<Guest> getGuests() {
         return guestService.getAllGuests();
     }
 
     @GetMapping("/{id}")
-    public Optional<GuestDto> getGuestById(@PathVariable String id) {
+    public Optional<Guest> getGuestById(@PathVariable String id) {
         return guestService.getGuestById(id);
     }
 
     @PostMapping("")
-    public GuestDto saveGuest(@RequestBody GuestDto client) {
+    public Guest saveGuest(@RequestBody Guest client) {
         return guestService.saveGuest(client);
     }
 
+    @PutMapping("")
+    public Guest updateGuest(@RequestBody Guest client) {
+        return guestService.saveGuest(client);
+    }
+
+    @ApiIgnore
     @DeleteMapping("")
     public void deleteAllGuest() {
         guestService.deleteAll();

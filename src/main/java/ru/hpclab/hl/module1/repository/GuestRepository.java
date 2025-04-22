@@ -1,7 +1,6 @@
 package ru.hpclab.hl.module1.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.hpclab.hl.module1.dto.GuestDto;
 import ru.hpclab.hl.module1.entities.Guest;
 
 //TODO
@@ -13,9 +12,7 @@ public interface GuestRepository extends CrudRepository<Guest, Long> {
 
     Guest findById(long id);
 
-    Guest save(GuestDto guest);
+    Guest save(Guest guest);
 
     void deleteAll();
-
-//    void delete(GuestDto guest);
 }
