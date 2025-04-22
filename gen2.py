@@ -2,17 +2,16 @@ import argparse
 import requests
 from faker import Faker
 import random
-import time
 from concurrent.futures import ThreadPoolExecutor
-from tqdm import tqdm
 from datetime import datetime, timedelta
 
 class HotelDataPopulator:
-    def __init__(self, endpoint, count=500):
+    def __init__(self, endpoint, count=5, delete_all=False):
         self.fake = Faker()
         self.base_url = "http://localhost:8080/api"  # Adjust to your service URL
         self.endpoint = endpoint
         self.count = count
+        self.delete_all = delete_all
         self.session = requests.Session()
 
         self.endpoint_config = {
@@ -37,30 +36,30 @@ class HotelDataPopulator:
             raise ValueError(f"Unsupported endpoint: {endpoint}")
 
     def _generate_room_data(self):
-        room_type = random.choice(["LUX", "ECO"])
+        if self.delete_all:
+            self.session.delete(f"{self.base_url}/rooms")
+        room_type = random.choice(["LUX", "ECONOM", "STANDART"])
         base_price = 3000 if room_type == "LUX" else 1500
         price_per_night = base_price + random.randint(-200, 500)
 
         return {
-            "roomType": room_type,
-            "pricePerNight": price_per_night,
-            "description": self.fake.sentence(),
-            "capacity": random.randint(1, 4),
-            "floor": random.randint(1, 10),
-            "roomNumber": self.fake.unique.bothify('###?')
+            "type": room_type,
+            "costPerNight": price_per_night,
         }
 
     def _generate_guest_data(self):
+        if self.delete_all:
+            self.session.delete(f"{self.base_url}/guests")
         return {
             "fullName": self.fake.name(),
-            "passportNumber": self.fake.unique.bothify('#### ######'),
-            "phoneNumber": self.fake.phone_number(),
-            "email": self.fake.unique.email(),
-            "birthDate": self.fake.date_of_birth(minimum_age=18, maximum_age=80).isoformat()
+            "passport": self.fake.passport_number(),
+            "checkIn": str(self.fake.date_between_dates(datetime(2015,1,1), datetime(2025,4,21))),
+            "checkOut": str(self.fake.date_between_dates(datetime(2015,1,1), datetime(2026,12,12))),
         }
 
     def _generate_booking_data(self):
-        # Получаем существующие комнаты и гостей
+        if self.delete_all:
+            self.session.delete(f"{self.base_url}/bookings")
         rooms = self._get_existing_rooms()
         guests = self._get_existing_guests()
 
@@ -69,23 +68,18 @@ class HotelDataPopulator:
         if not guests:
             self._generate_guest_data()
 
-        # Генерируем даты бронирования
         check_in_date = self.fake.date_between(start_date='today', end_date='+30d')
         stay_duration = random.randint(1, 14)
         check_out_date = check_in_date + timedelta(days=stay_duration)
 
-        # Получаем цену за ночь для выбранной комнаты
         room = random.choice(rooms)
-        room_price = room['pricePerNight']
+        room_price = room['costPerNight']
 
         return {
             "roomId": room['id'],
             "guestId": random.choice(guests)['id'],
-            "checkInDate": check_in_date.isoformat(),
-            "checkOutDate": check_out_date.isoformat(),
-            "totalPrice": stay_duration * room_price,
-            "status": random.choice(["confirmed", "pending", "cancelled"]),
-            "createdAt": datetime.now().isoformat()
+            "dates": str(check_in_date) + ',' + str(check_out_date),
+            "cost": stay_duration * room_price,
         }
 
     def _get_existing_rooms(self):
@@ -129,11 +123,7 @@ class HotelDataPopulator:
 
         # Создаем записи с прогресс-баром и параллельными запросами
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            results = list(tqdm(
-                executor.map(lambda d: self._send_create_request(url, d), data),
-                total=self.count,
-                desc=f"Creating {self.endpoint} records"
-            ))
+            results = list(executor.map(lambda d: self._send_create_request(url, d), data))
 
         # Проверяем результаты
         success_count = sum(1 for r in results if r and r.status_code in [200, 201])
@@ -163,18 +153,14 @@ def main():
     parser.add_argument("--endpoint", required=True,
                         choices=['rooms', 'guests', 'bookings'],
                         help="API endpoint to populate")
+    parser.add_argument("--delete_all", type=bool, default=False, help="Should the data be cleaned")
 
     args = parser.parse_args()
 
     try:
-        populator = HotelDataPopulator(args.endpoint, args.count)
-
-        print(f"Creating {args.count} {args.endpoint} records...")
-        start_time = time.time()
+        populator = HotelDataPopulator(args.endpoint, args.count, args.delete_all)
         populator.create_data()
-        elapsed = time.time() - start_time
 
-        print(f"\nDone! Operation completed in {elapsed:.2f} seconds")
     except Exception as e:
         print(f"Error: {str(e)}")
         exit(1)

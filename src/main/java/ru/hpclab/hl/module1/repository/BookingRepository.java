@@ -14,6 +14,6 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
 
     Booking save(Booking booking);
 
-    void delete(Booking booking);
+    void deleteAll();
 
 }

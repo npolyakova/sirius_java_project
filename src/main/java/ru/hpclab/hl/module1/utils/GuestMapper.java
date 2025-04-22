@@ -12,10 +12,12 @@ public class GuestMapper {
         dto.setId(entity.getId());
         dto.setFullName(entity.getFullName());
         dto.setPassport(entity.getPassport());
+        dto.setCheckIn(entity.getCheckIn());
+        dto.setCheckIn(entity.getCheckOut());
         return dto;
     }
 
-    public Guest mapToPGuest(GuestDto dto) {
+    public Guest mapToGuestEntity(GuestDto dto) {
         Guest entity = new Guest();
         entity.setId(dto.getId());
         entity.setFullName(dto.getFullName());

@@ -1,9 +1,9 @@
 package ru.hpclab.hl.module1.controller;
 
+import com.mangofactory.swagger.annotations.ApiIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.hpclab.hl.module1.dto.BookingDto;
-import ru.hpclab.hl.module1.entities.Booking;
 import ru.hpclab.hl.module1.service.BookingService;
 
 import java.util.List;
@@ -29,13 +29,19 @@ public class BookingController {
         return bookingService.getBookingById(id);
     }
 
-//    @DeleteMapping("/{id}")
-//    public void deleteBooking(@PathVariable String id) {
-//        bookingService.deleteBooking(id);
-//    }
+    @ApiIgnore
+    @DeleteMapping("/")
+    public void deleteBookings() {
+        bookingService.deleteAll();
+    }
 
     @PostMapping("")
-    public BookingDto saveBooking(@RequestBody Booking client) {
+    public BookingDto saveBooking(@RequestBody BookingDto client) {
+        return bookingService.saveBooking(client);
+    }
+
+    @PutMapping("")
+    public BookingDto updateBooking(@RequestBody BookingDto client) {
         return bookingService.saveBooking(client);
     }
 }
