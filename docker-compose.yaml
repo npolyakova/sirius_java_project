@@ -1,24 +1,17 @@
 services:
   app:
-    build: ./
+    image: npolly/hotel_app_1
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres_db
-
-  postgres_db:
-    image:
-      postgres:16
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
     environment:
-      POSTGRES_DB: "java_app_db"
-      POSTGRES_USER: "app_user"
-      POSTGRES_PASSWORD: "23bjf8Gewb3"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
-    volumes:
-      - .:/docker-entrypoint-initdb.d
-      - javaapp-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
-volumes:
-  javaapp-data:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:${DB_PORT:-5432}/${DB_NAME:-module1}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-postgres}

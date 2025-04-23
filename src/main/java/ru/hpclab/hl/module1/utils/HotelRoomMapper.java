@@ -7,7 +7,7 @@ import ru.hpclab.hl.module1.entities.Guest;
 @Service
 public class HotelRoomMapper {
 
-    public GuestDto mapToGuestDto(Guest entity) {
+    public GuestDto mapToRoomDto(Guest entity) {
         GuestDto dto = new GuestDto();
         dto.setId(entity.getId());
         dto.setFullName(entity.getFullName());
@@ -15,7 +15,7 @@ public class HotelRoomMapper {
         return dto;
     }
 
-    public Guest mapToPGuest(GuestDto dto) {
+    public Guest mapToRoomEntity(GuestDto dto) {
         Guest entity = new Guest();
         entity.setId(dto.getId());
         entity.setFullName(dto.getFullName());

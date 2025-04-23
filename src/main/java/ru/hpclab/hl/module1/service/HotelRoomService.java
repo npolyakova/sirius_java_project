@@ -35,8 +35,7 @@ public class HotelRoomService {
         room.ifPresent(hotelRoom -> roomRepository.delete(hotelRoom));
     }
 
-//    public HotelRoom updateHotelRoom(String id, HotelRoom room) {
-//        room.setId(Long.getLong(id));
-//        return roomRepository.put(room);
-//    }
+    public void deleteAll() {
+        roomRepository.deleteAll();
+    }
 }

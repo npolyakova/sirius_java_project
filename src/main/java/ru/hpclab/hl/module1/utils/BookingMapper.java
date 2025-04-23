@@ -15,7 +15,7 @@ public class BookingMapper {
         return dto;
     }
 
-    public Booking mapToEntity(BookingDto dto) {
+    public static Booking mapToBookingEntity(BookingDto dto) {
         Booking entity = new Booking();
         entity.setId(dto.getId());
         entity.setRoom(new HotelRoom(dto.getRoomId()));
