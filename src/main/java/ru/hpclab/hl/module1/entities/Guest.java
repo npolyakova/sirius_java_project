@@ -45,4 +45,7 @@ public class Guest {
     public Guest(){
 
     }
+
+    public Guest(int i, String s, String digits) {
+    }
 }

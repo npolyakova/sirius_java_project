@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.hpclab.hl.module1.dto.BookingDto;
 import ru.hpclab.hl.module1.service.BookingService;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,12 +37,12 @@ public class BookingController {
     }
 
     @PostMapping("")
-    public BookingDto saveBooking(@RequestBody BookingDto client) {
+    public BookingDto saveBooking(@RequestBody BookingDto client) throws ParseException {
         return bookingService.saveBooking(client);
     }
 
     @PutMapping("")
-    public BookingDto updateBooking(@RequestBody BookingDto client) {
+    public BookingDto updateBooking(@RequestBody BookingDto client) throws ParseException {
         return bookingService.saveBooking(client);
     }
 }

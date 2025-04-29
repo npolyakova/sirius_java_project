@@ -23,7 +23,7 @@ public class HotelRoomService {
     }
 
     public Optional<HotelRoom> getHotelRoomById(String id) {
-        return roomRepository.findById(Long.getLong(id));
+        return Optional.ofNullable(roomRepository.findById(Long.parseLong(id)));
     }
 
     public HotelRoom saveHotelRoom(HotelRoom user) {

@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 import ru.hpclab.hl.module1.dto.BookingDto;
 import ru.hpclab.hl.module1.repository.BookingRepository;
 import ru.hpclab.hl.module1.utils.BookingMapper;
+import ru.hpclab.hl.module1.utils.ObservabilityService;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +30,7 @@ public class BookingService {
     }
 
     @Transactional
-    public BookingDto saveBooking(BookingDto booking) {
+    public BookingDto saveBooking(BookingDto booking) throws ParseException {
         return mapToDto(bookingRepository.save(mapToBookingEntity(booking)));
     }
 

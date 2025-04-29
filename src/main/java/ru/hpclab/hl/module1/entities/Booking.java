@@ -51,9 +51,10 @@ public class Booking {
     @Column
     private double cost;
 
-    public Booking(long id, Guest guest, Date arrivalDate, Date leavingDate) {
+    public Booking(long id, Guest guest, HotelRoom room, Date arrivalDate, Date leavingDate) {
         this.id = id;
         this.guest = guest;
+        this.room = room;
         this.arrivalDate = arrivalDate;
         this.leavingDate = leavingDate;
     }
