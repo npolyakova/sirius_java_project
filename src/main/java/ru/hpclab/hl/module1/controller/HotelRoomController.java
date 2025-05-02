@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.hpclab.hl.module1.entities.HotelRoom;
 import ru.hpclab.hl.module1.service.HotelRoomService;
+import ru.hpclab.hl.module1.service.ObservabilityService;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,9 @@ public class HotelRoomController {
         this.roomService = roomService;
     }
 
+    @Autowired
+    private ObservabilityService observabilityService;
+
     @GetMapping("")
     public List<HotelRoom> getHotelRooms() {
         return roomService.getAllHotelRooms();
@@ -26,7 +30,10 @@ public class HotelRoomController {
 
     @GetMapping("/{id}")
     public Optional<HotelRoom> getHotelRoomById(@PathVariable String id) {
-        return roomService.getHotelRoomById(id);
+        observabilityService.start();
+        Optional<HotelRoom> room = roomService.getHotelRoomById(id);
+        observabilityService.stop();
+        return room;
     }
 
     @DeleteMapping("/{id}")
@@ -36,7 +43,10 @@ public class HotelRoomController {
 
     @PostMapping("")
     public HotelRoom saveHotelRoom(@RequestBody HotelRoom client) {
-        return roomService.saveHotelRoom(client);
+        observabilityService.start();
+        HotelRoom room = roomService.saveHotelRoom(client);
+        observabilityService.stop();
+        return room;
     }
 
     @PutMapping("")

@@ -17,13 +17,19 @@ public class HotelRoomService {
     @Autowired
     private HotelRoomRepository roomRepository;
 
+    @Autowired
+    private ObservabilityService observabilityService;
+
     @Transactional
     public List<HotelRoom> getAllHotelRooms() {
         return roomRepository.findAll();
     }
 
     public Optional<HotelRoom> getHotelRoomById(String id) {
-        return Optional.ofNullable(roomRepository.findById(Long.parseLong(id)));
+        observabilityService.start();
+        Optional<HotelRoom> room = Optional.ofNullable(roomRepository.findById(Long.parseLong(id)));
+        observabilityService.stop();
+        return room;
     }
 
     public HotelRoom saveHotelRoom(HotelRoom user) {

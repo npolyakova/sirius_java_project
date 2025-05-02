@@ -23,9 +23,8 @@ public class AnalyticsController {
     }
 
     @GetMapping("/")
-    public Map<Integer, Integer> getStatistics(){
-//        return bookingService.getAverageOccupancyByRoomCategory();
-        return Map.of();
+    public Map<String, Map<String, Double>> getStatistics(){
+        return bookingService.getAverageOccupancyByRoomCategory();
     }
 
 }

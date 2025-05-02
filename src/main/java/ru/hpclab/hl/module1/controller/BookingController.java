@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.hpclab.hl.module1.dto.BookingDto;
 import ru.hpclab.hl.module1.service.BookingService;
+import ru.hpclab.hl.module1.service.ObservabilityService;
 
 import java.text.ParseException;
 import java.util.List;
@@ -16,13 +17,21 @@ public class BookingController {
 
     @Autowired
     private final BookingService bookingService;
+
+    @Autowired
     public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
+    @Autowired
+    private ObservabilityService observabilityService;
+
     @GetMapping("")
     public List<BookingDto> getBookings() {
-        return bookingService.getAllBookings();
+        observabilityService.start();
+        List<BookingDto> booking = bookingService.getAllBookings();
+        observabilityService.start();
+        return booking;
     }
 
     @GetMapping("/{id}")
