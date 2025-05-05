@@ -51,11 +51,18 @@ public class KafkaConsumerService {
     private MessageDto parseMessage(String message) {
         try {
             ObjectMapper mapper = new ObjectMapper();
+            MessageDto messageDto = new MessageDto();
+
             JsonNode rootNode = mapper.readTree(message);
             if (!rootNode.has("entity") || !rootNode.has("operation") || !rootNode.has("payload")) {
                 throw new RuntimeException("Invalid message format - missing required fields");
             }
-            return new ObjectMapper().readValue(message, MessageDto.class);
+
+            messageDto.setEntity(rootNode.get("entity").asText());
+            messageDto.setOperation(rootNode.get("operation").asText());
+            messageDto.setPayload(rootNode.get("payload"));
+
+            return messageDto;
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to parse Kafka message", e);
         }
@@ -126,9 +133,9 @@ public class KafkaConsumerService {
             }
     }
 
-    private <T> T parsePayload(Object payload, Class<T> clazz) {
+    private <T> T parsePayload(JsonNode payload, Class<T> clazz) {
         try {
-            return new ObjectMapper().readValue(payload.toString(), clazz);
+            return new ObjectMapper().treeToValue(payload, clazz);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Failed to parse payload", e);
         }
