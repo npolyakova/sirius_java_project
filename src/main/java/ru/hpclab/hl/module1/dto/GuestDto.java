@@ -7,6 +7,6 @@ public class GuestDto {
     long id;
     String fullName;
     String passport;
-    String  checkIn;
+    String checkIn;
     String checkOut;
 }
